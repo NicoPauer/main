@@ -2,7 +2,9 @@
   Datos de Autoria:
 
     Autor: Nico Pauer
-    Fecha: 29/05/2023
+    Fecha Creacion: 29/05/2023
+    Fecha Actualizacion: 31/05/2023
+    version: 1.4
     Mail: nicolaspauer20@gmail.com
     Curso: UTN FRBB - Informatica I, comision 2B
 
@@ -23,13 +25,17 @@
 
    Compilacion:  gcc calculadora-vectorial.c -o calculadora-vectorial -lm
    
-   Nota: Al ingresar la tercera componente del primer vector el bucle se vuelve infinito.
+   Nota: Se usa notacion cartesiana para ingresar vectores y solo se implemento hasta
+         la operacion vectorial "modulo de cada vector en el espacio".
 
 */
 
 #include <stdio.h>
 #include <math.h>
 
+#ifndef CERRAR
+    #define CERRAR 9
+#endif
 /* Vectores representados como arreglos */
 double u[3], v[3], resultado[3], director_u[3], director_v[3], proyeccion_uv[3], proyeccion_vu[3];
 /* Componentes de los vectores */
@@ -45,6 +51,26 @@ void main()
 {
     do
     {
+      /* Muestro opciones posibles al usario */
+        printf("\n\nTIENES LAS SIGUIENTES OPCIONES: \n");
+        printf("\t1. Suma\n");
+        printf("\t2. Resta\n");
+        printf("\t3. Producto Escalar\n");
+        printf("\t4. Producto Vectorial\n");
+        printf("\t5. Modulo De Cada Vector\n");
+        printf("\t6. Directores\n");
+        printf("\t7. Proyeccion de Cada Vector\n");
+        printf("\t8. Vector Proyeccion de Cada Vector\n");
+        printf("\t9. Cerrar El Programa\n");
+
+        printf("\nIngrese opcion: ");
+       /* Solicito al usario la opcion */
+        scanf("%d", &opcion);
+       /* Cierro el programa si se elige la ultima opcion */
+         if (opcion == CERRAR)
+         {
+            break;
+         }
         /* Solicito vectores al usuario dentro del bucle para que 
            calcule las operaciones sobre los vectores que necesite usar para que no sean los mismos */
         printf("\n\nIngrese vector u: ");
@@ -60,21 +86,6 @@ void main()
         v[0] = vx;
         v[1] = vy;
         v[2] = vz;
-       /* Muestro opciones posibles al usario */
-        printf("\nTIENES LAS SIGUIENTES OPCIONES: \n");
-        printf("\t1. Suma\n");
-        printf("\t2. Resta\n");
-        printf("\t3. Producto Escalar\n");
-        printf("\t4. Producto Vectorial\n");
-        printf("\t5. Modulo De Cada Vector\n");
-        printf("\t6. Directores\n");
-        printf("\t7. Proyeccion de Cada Vector\n");
-        printf("\t8. Vector Proyeccion de Cada Vector\n");
-        printf("\t9. Cerrar El Programa\n");
-
-        printf("\nIngrese opcion: ");
-       /* Solicito al usario la opcion */
-        scanf("%d", &opcion);
       /* Realiza la opcion solicitada */
         switch(opcion)
         {
@@ -97,7 +108,7 @@ void main()
 
             case 4: 
               /* Producto Vectorial */
-                printf("\nEl Producto Vectorial da el vector (%.2lf, %.2lf, %.2lf).", (ux * vx), (uy * vy), (uz * vz));
+                printf("\nEl Producto Vectorial da el vector (%.2lf, %.2lf, %.2lf).", -(vy * uz) + (vz * uy), (vx * uz) - (vz * ux), -(vx * uy) + (vy * ux));
             break;
 
             case 5: 
@@ -119,11 +130,8 @@ void main()
                 /* Vector Proyeccion de cada uno de los vectores */
             break;
 
-          /* La ultima opcion termina el programa, es bastante practica para
-             no detener el programa ni forzar su detencion */
-            case 9: break; break;
           /* La opcion debe ser una de las posibles */
             default: printf("\nOPCION NO VALIDA (= P).\n"); break;
         }
-    } while (opcion != 9);
+    } while (opcion != CERRAR);
 }
